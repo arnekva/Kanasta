@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
 
@@ -89,14 +90,14 @@ body {font-family: Arial, Helvetica, sans-serif;}
     <div class="intro-body" id="intro-body">
         <h2>Velkommen!</h2>
       <p>Hvor mange spillere skal det være?</p>
-      <input type="text" id="playerInputCount" />
-      <input type="submit" value="Start" onclick="startGame()"/>
+      <input type="text" id="playerInputCount" class="roundScoreField" />
+      <input type="submit" value="Start" onclick="startGame()" class="startBtn"/>
       <div id="nameInputs"></div>
     </div>
     <div class="mainGame" id="gameContainer">
       <h1>Kanasta</h1>
-      <h2 id="roundHeader"></h2>
-      <h4 id="roundRules"></h2>
+      <h2 id="roundHeader" class="roundHeader"></h2>
+      <h4 id="roundRules" class="roundRules"></h2>
         <div id="scoreInputContainer"></div>
     </div>
     <div class="currentScores" id="currentScoreContainer">

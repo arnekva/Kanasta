@@ -57,6 +57,7 @@ let node = document.getElementById("nameInputs")
     startNextRound()
   }
   submitNamesButton.type = "Submit"
+  submitNamesButton.className = "submitNamesButton"
   submitNamesButton.value = "OK"
   node.appendChild(submitNamesButton)
 }
@@ -67,8 +68,6 @@ function hideCreationPart(){
 }
 
 function startNextRound(){
-
-
   let header = document.getElementById('roundHeader');
   let ruleText = document.getElementById('roundRules')
   header.innerText = rounds.rounds[roundCount].name
@@ -81,16 +80,17 @@ function startNextRound(){
 function firstRoundSetup(){
   let node = document.getElementById("scoreInputContainer")
   for(let i = 0; i<playerCount;i++){
+    let container = document.createElement('div')
+    container.className = "playerContainer"
     let inputfield = document.createElement('input')
-
-
     inputfield.dataset.playerid = i;
     inputfield.className = "roundScoreField"
-    node.appendChild(inputfield)
     let labelForInput = document.createElement('Label')
     labelForInput.innerText = findPlayerName(i);
     labelForInput.className = "playerNameText"
-    node.appendChild(labelForInput)
+    container.appendChild(labelForInput)
+    container.appendChild(inputfield)
+    node.appendChild(container)
   }
 
   let submitScoresButton = document.createElement('input')
@@ -102,7 +102,6 @@ function firstRoundSetup(){
           players[i].setRoundScore(values[j].value - 0)
           players[i].score += values[j].value - 0;
         }
-
         }
       }
       if(roundCount+1 === rounds.rounds.length){
@@ -110,13 +109,14 @@ function firstRoundSetup(){
       }else{
       printCurrentLeader()
       printScores()
-
       roundCount++;
+      clearFields()
       startNextRound()
       }
     }
     submitScoresButton.type = "Submit"
     submitScoresButton.value = "OK"
+    submitScoresButton.className = "submitScoresButton"
     node.appendChild(submitScoresButton)
 
 }
@@ -130,6 +130,13 @@ function findPlayerName(id){
 }
 function createScoreBoxes(){
 
+}
+function clearFields(){
+  let els = document.getElementsByClassName("roundScoreField");
+  for(let i = 0; i<els.length;i++){
+    els[i].value = "";
+  }
+  els[0].focus()
 }
 function printScores(){
   if(roundCount == 0){
@@ -178,4 +185,7 @@ for(let i = 0;i<playerCount;i++){
     scoreboard.appendChild(node)
   }
   }
+  //Gjør i modale box slik at bruker kan se når som helst.
+  //Bruk roundcount for å sjekke hvor langt det skal genereres
+  //En kolonne for runde, en kolonne videre for hver spiller
 }
