@@ -3,13 +3,13 @@ let players = [];
 let rounds = {
 "rounds":[
   {"name": "3+3", "rules":"3 like + 3 like"},
-  {"name": "3+4", "rules":"3 like + en serie"},
-  {"name": "4+4", "rules":"To serier"},
+  {"name": "3+4", "rules":"3 like + 1 serie"},
+  {"name": "4+4", "rules":"2 serier"},
   {"name": "3+3+3", "rules":"3 like + 3 like + 3 like"},
-  {"name": "3+3+4", "rules":"3 like + 3 like + en serie"},
-  {"name": "3+4+4", "rules":"3 like + to serier"},
-  {"name": "4+4+4", "rules":"Tre serier"},
-  {"name": "3+3+3+3", "rules":"Tre like fire ganger"},
+  {"name": "3+3+4", "rules":"3 like + 3 like + 1 serie"},
+  {"name": "3+4+4", "rules":"3 like + 2 serier"},
+  {"name": "4+4+4", "rules":"3 serier"},
+  {"name": "3+3+3+3", "rules":"3 like 4 ganger"},
 ]
 }
 let roundCount = 0;
@@ -97,7 +97,7 @@ function firstRoundSetup(){
   submitScoresButton.onclick = function(){
     let values = document.getElementsByClassName('roundScoreField')
       for(let i = 0; i<playerCount;i++){
-        for(let j = 0; j<playerCount;j++){
+        for(let j = 0; j<=playerCount;j++){
         if(values[j].dataset.playerid === players[i].id){
           players[i].setRoundScore(values[j].value - 0)
           players[i].score += values[j].value - 0;
@@ -115,7 +115,7 @@ function firstRoundSetup(){
       }
     }
     submitScoresButton.type = "Submit"
-    submitScoresButton.value = "OK"
+    submitScoresButton.value = "Lagre poeng"
     submitScoresButton.className = "submitScoresButton"
     node.appendChild(submitScoresButton)
 
