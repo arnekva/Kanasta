@@ -33,6 +33,14 @@ function startGame(){
   //Check input for number
     playerCount = input;
     createNameInputFields(input);
+    let btn = document.getElementById("startBtn")
+    let inp = document.getElementById("playerInputCount")
+    let text = document.getElementById("task")
+    let gmh = document.getElementById("gameHeader")
+    gmh.style.display = "none"
+    text.innerText = "Skriv inn navnet på spillerene"
+    inp.style.display = "none"
+    btn.style.display = "none"
 
 }
 
@@ -46,19 +54,23 @@ let node = document.getElementById("nameInputs")
     inp.dataset.playerid = i
     node.appendChild(inp)
   }
-  let submitNamesButton = document.createElement('input')
+  let submitNamesButton = document.createElement('button')
   submitNamesButton.onclick = function(){
     let names = document.getElementsByClassName("nameInputField")
     for(let i = 0; i<playerCount;i++){
-    let player = new Player(names[i].dataset.playerid, names[i].value)
+      let navn = names[i].value;
+      if(navn.length > 14){
+        navn = navn.substr(1,13) + "..."
+      }
+    let player = new Player(names[i].dataset.playerid, navn)
     players.push(player)
     }
     hideCreationPart()
     startNextRound()
   }
-  submitNamesButton.type = "Submit"
   submitNamesButton.className = "submitNamesButton"
   submitNamesButton.value = "OK"
+  submitNamesButton.innerText = "OK"
   node.appendChild(submitNamesButton)
 }
 function hideCreationPart(){
