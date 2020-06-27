@@ -24,7 +24,7 @@ h2, h4{
 .playerNameText{
   display: inline-block;
     clear: left;
-    width: 350px;
+    width: 200px;
     font-size: 40px;
     color:#DB3937;
      text-align: right;
@@ -51,8 +51,8 @@ margin-top: 40px;
 .playerContainer{
   margin-top:10px;
   margin: 0 auto;
-  
   justify-content: center;
+  text-align:center;
 
 }
 .startBtn{
@@ -98,4 +98,19 @@ border:none;
   box-shadow: 0px 0px 0px transparent;
  border: 0px solid transparent;
  text-shadow: 0px 0px 0px transparent;
+}
+.resetBtn{
+  height:40px;
+  width:90px;
+  background-color:#f77373;
+  font-size:20px;
+}
+.cardCount{
+  font-size:40px;
+  text-align: center;
+  color:#48adf7;
+}
+.roundCount{
+  font-size:15px;
+  color:#48adf7;
 }

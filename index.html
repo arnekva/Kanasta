@@ -97,14 +97,17 @@ body {font-family: Arial, Helvetica, sans-serif;}
       <div id="nameInputs"></div>
     </div>
     <div class="mainGame" id="gameContainer">
+
       <h2 id="roundHeader" class="roundHeader"></h2>
       <h4 id="roundRules" class="roundRules"></h2>
+        <h4 id="antallKort" class="cardCount"></h4>
         <div id="scoreInputContainer"></div>
     </div>
     <div class="currentScores" id="currentScoreContainer">
     <h3 id="currentLeader"></h3>
     <h4 id="runnerUp"></h4>
   </div>
+        <h4 id="roundCount" class="roundCount"></h4>
   <div class="scoreboard" id="scoreboard">
 
   </div>
@@ -112,7 +115,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 </div>
 
-
+<button class="resetBtn"onclick="nukeState()">Nullstill</button>
   <script src="game.js"></script>
 </body>
 </html>
