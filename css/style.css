@@ -11,13 +11,13 @@ h2, h4{
   text-align: center;
 }
 .roundHeader{
-  font-size: 250px;
+  font-size: 185px;
   text-align: center;
   color: #F0813C;
 }
 
 .roundRules {
-  font-size:65px;
+  font-size:50px;
   text-align: center;
   color:#EEC77A;
 }
@@ -106,7 +106,7 @@ border:none;
   font-size:20px;
 }
 .cardCount{
-  font-size:40px;
+  font-size:30px;
   text-align: center;
   color:#48adf7;
 }
