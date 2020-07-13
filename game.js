@@ -185,7 +185,5 @@ for(let i = 0;i<playerCount;i++){
     scoreboard.appendChild(node)
   }
   }
-  //Gjør i modale box slik at bruker kan se når som helst.
-  //Bruk roundcount for å sjekke hvor langt det skal genereres
-  //En kolonne for runde, en kolonne videre for hver spiller
+
 }
