@@ -1,22 +1,22 @@
 let playerCount = 0;
 let players = [];
 let rounds = {
-"rounds":[
-  {"name": "3+3", "rules":"3 like + 3 like", "antall":"6"},
-  {"name": "3+4", "rules":"3 like + 1 serie","antall":"7"},
-  {"name": "4+4", "rules":"2 serier","antall":"8"},
-  {"name": "3+3+3", "rules":"3 like + 3 like + 3 like","antall":"9"},
-  {"name": "3+3+4", "rules":"3 like + 3 like + 1 serie", "antall":"10"},
-  {"name": "3+4+4", "rules":"3 like + 2 serier", "antall":"11"},
-  {"name": "4+4+4", "rules":"3 serier","antall":"12"},
-  {"name": "3+3+3+3", "rules":"3 like 4 ganger", "antall":"12"},
-]
+  "rounds": [
+    { "name": "3+3", "rules": "3 like + 3 like", "antall": "6" },
+    { "name": "3+4", "rules": "3 like + 1 serie", "antall": "7" },
+    { "name": "4+4", "rules": "2 serier", "antall": "8" },
+    { "name": "3+3+3", "rules": "3 like + 3 like + 3 like", "antall": "9" },
+    { "name": "3+3+4", "rules": "3 like + 3 like + 1 serie", "antall": "10" },
+    { "name": "3+4+4", "rules": "3 like + 2 serier", "antall": "11" },
+    { "name": "4+4+4", "rules": "3 serier", "antall": "12" },
+    { "name": "3+3+3+3", "rules": "3 like 4 ganger", "antall": "12" },
+  ]
 }
 let roundCount = 0;
 let hasJustRestored = false;
-function checkForState(){
+function checkForState() {
   let state = restoreState();
-  if(state !== null){
+  if (state !== null) {
     console.log("not null");
     hideCreationPart();
     firstRoundSetup();
@@ -26,29 +26,29 @@ function checkForState(){
 }
 checkForState();
 
-function saveState(){
+function saveState() {
   let state = {
-    "players":players,
-    "roundCount":roundCount,
+    "players": players,
+    "roundCount": roundCount,
 
   }
   let saved = JSON.stringify(state)
   localStorage.setItem('state', saved)
   console.log("Saved to storage");
 }
-function restoreState(){
+function restoreState() {
   hasJustRestored = true;
   console.log("Attempting to retrieve state from storage");
   let state = JSON.parse(localStorage.getItem('state'))
-  if(state !== null){
+  if (state !== null) {
     playerCount = state.players.length
     console.log("Found previous state");
     console.log(state);
-    for(let i = 0; i<state.playerCount;i++){
+    for (let i = 0; i < state.playerCount; i++) {
       let player = new Player(state.players[i].id, state.players[i].name)
       player.updateRounds(state.players[i].rounds)
-    players[i] = state.players
-    console.log();
+      players[i] = state.players
+      console.log();
     }
     players = state.players;
     roundCount = state.roundCount;
@@ -59,27 +59,27 @@ function restoreState(){
   }
   return null
 }
-function nukeState(){
-localStorage.clear();
-location.reload()
+function nukeState() {
+  localStorage.clear();
+  location.reload()
 }
-function Player(id, name){
+function Player(id, name) {
   this.id = id;
   this.name = name;
   this.score = 0;
   this.rounds = []
-  this.getScore = function (){
+  this.getScore = function () {
     return this.score;
   }
-  this.setRoundScore = function(score){
+  this.setRoundScore = function (score) {
     this.rounds.push(score);
   }
-  this.updateRounds = function(newRounds){
+  this.updateRounds = function (newRounds) {
     this.rounds = newRounds;
   }
 
 }
-function hideSteps(){
+function hideSteps() {
   let btn = document.getElementById("startBtn")
   let inp = document.getElementById("playerInputCount")
   let text = document.getElementById("task")
@@ -89,35 +89,36 @@ function hideSteps(){
   inp.style.display = "none"
   btn.style.display = "none"
 }
-function startGame(){
+function startGame() {
   let input = document.getElementById("playerInputCount").value
   //Check input for number
-    playerCount = input;
-    createNameInputFields(input);
+  playerCount = input;
+  createNameInputFields(input);
 
-    hideSteps();
+  hideSteps();
 }
 
-function createNameInputFields(count){
-let node = document.getElementById("nameInputs")
-  for(let i = 0; i<count;i++){
+function createNameInputFields(count) {
+  let node = document.getElementById("nameInputs")
+  for (let i = 0; i < count; i++) {
     let inp = document.createElement('input')
     inp.className = "nameInputField"
     inp.placeholder = "Navn"
+
     inp.id = "nameField"
     inp.dataset.playerid = i
     node.appendChild(inp)
   }
   let submitNamesButton = document.createElement('button')
-  submitNamesButton.onclick = function(){
+  submitNamesButton.onclick = function () {
     let names = document.getElementsByClassName("nameInputField")
-    for(let i = 0; i<playerCount;i++){
+    for (let i = 0; i < playerCount; i++) {
       let navn = names[i].value;
-      if(navn.length > 12){
-        navn = navn.substr(1,10) + "..."
+      if (navn.length > 12) {
+        navn = navn.substr(1, 10) + "..."
       }
-    let player = new Player(names[i].dataset.playerid, navn)
-    players.push(player)
+      let player = new Player(names[i].dataset.playerid, navn)
+      players.push(player)
     }
     hideCreationPart()
     startNextRound()
@@ -127,43 +128,44 @@ let node = document.getElementById("nameInputs")
   submitNamesButton.innerText = "OK"
   node.appendChild(submitNamesButton)
 }
-function hideCreationPart(){
+function hideCreationPart() {
   document.getElementById('intro-body').style.display = 'none'
   document.getElementsByClassName('mainGame')[0].style.display = 'block'
 
 }
 
-function startNextRound(){
+function startNextRound() {
   saveState();
 
   let header = document.getElementById('roundHeader');
   let cardCount = document.getElementById('antallKort');
   let roundCountText = document.getElementById('roundCount');
   let ruleText = document.getElementById('roundRules')
-  if(roundCount == rounds.rounds.length){
+  if (roundCount == rounds.rounds.length) {
     header.innerText = "Spillet er ferdig"
     ruleText.innerText = ""
     cardCount.innerText = ""
-    let runde = roundCount - 0 +1
+    let runde = roundCount - 0 + 1
     roundCountText.innerText = "Runde " + runde + " av " + rounds.rounds.length
-  }else{
-  header.innerText = rounds.rounds[roundCount].name
-  ruleText.innerText = rounds.rounds[roundCount].rules
-  cardCount.innerText = "Det skal deles " + rounds.rounds[roundCount].antall + " kort"
-  let runde = roundCount - 0 +1
-  roundCountText.innerText = "Runde " + runde + " av " + rounds.rounds.length
-  if(roundCount === 0 && hasJustRestored){
-    firstRoundSetup()
+  } else {
+    header.innerText = rounds.rounds[roundCount].name
+    ruleText.innerText = rounds.rounds[roundCount].rules
+    cardCount.innerText = "Det skal deles " + rounds.rounds[roundCount].antall + " kort"
+    let runde = roundCount - 0 + 1
+    roundCountText.innerText = "Runde " + runde + " av " + rounds.rounds.length
+    if (roundCount === 0 && hasJustRestored) {
+      firstRoundSetup()
     }
-    }
+  }
 }
-function firstRoundSetup(){
+function firstRoundSetup() {
   let node = document.getElementById("scoreInputContainer")
-    console.log("COUNT: " + playerCount);
-  for(let i = 0; i<playerCount;i++){
+  console.log("COUNT: " + playerCount);
+  for (let i = 0; i < playerCount; i++) {
     let container = document.createElement('div')
     container.className = "playerContainer"
     let inputfield = document.createElement('input')
+    inputfield.setAttribute("type", "number")
     inputfield.dataset.playerid = i;
     inputfield.className = "roundScoreField"
     let labelForInput = document.createElement('Label')
@@ -176,94 +178,95 @@ function firstRoundSetup(){
 
   let submitScoresButton = document.createElement('input')
   //todo: legg til event listener
-  submitScoresButton.onclick = function(){
+  submitScoresButton.onclick = function () {
     let values = document.getElementsByClassName('roundScoreField')
-      for(let i = 0; i<playerCount;i++){
-        for(let j = 0; j<=playerCount;j++){
-        if(values[j].dataset.playerid === players[i].id){
+    for (let i = 0; i < playerCount; i++) {
+      for (let j = 0; j <= playerCount; j++) {
+        if (values[j].dataset.playerid === players[i].id) {
           players[i].rounds.push(values[j].value - 0)
           players[i].score += values[j].value - 0;
         }
-        }
       }
-      if(roundCount+1 === rounds.rounds.length){
-        printWinnerAndScoreboard()
-        endGame()
-        printScores()
-      }else{
+    }
+    if (roundCount + 1 === rounds.rounds.length) {
+      printWinnerAndScoreboard()
+      printCurrentLeader()
+      printScores()
+      endGame()
+    } else {
       printCurrentLeader()
       printScores()
       roundCount++;
       clearFields()
       startNextRound()
-      }
     }
-    submitScoresButton.type = "Submit"
-    submitScoresButton.value = "Lagre poeng"
-    submitScoresButton.className = "submitScoresButton"
-    node.appendChild(submitScoresButton)
+  }
+  submitScoresButton.type = "Submit"
+  submitScoresButton.value = "Lagre poeng"
+  submitScoresButton.className = "submitScoresButton"
+  node.appendChild(submitScoresButton)
 
 }
-function endGame(){
+function endGame() {
   let main = document.getElementById("gameContainer")
   main.style.display = "none"
   let winnerText = document.getElementById("currentLeader")
   let winnerTab = checkForDuplicateWinners()
-  if(winnerTab.length > 1){
+  if (winnerTab.length > 1) {
     winnerText.innerText = "Vinnerene er " + winnerTab[0].name
-    for(let i = 1; i<winnerTab.length;i++){
+    for (let i = 1; i < winnerTab.length; i++) {
       winnerText.innerText += " og " + winnerTab[i].name
     }
     winnerText.innerText += "!"
-  }else{
+  } else {
     winnerText.innerText = "Vinneren er " + winnerTab[0].name + "!"
   }
 
 }
-function checkForDuplicateWinners(){
+function checkForDuplicateWinners() {
   let x = []
-  for(let i = 0; i<players.length;i++){
-    if(players[0].score == players[i].score){
+  for (let i = 0; i < players.length; i++) {
+    if (players[0].score == players[i].score) {
       x.push(players[i])
     }
   }
   return x;
 }
-function findPlayerName(id){
-  for(let i = 0; i<playerCount;i++){
-    if(players[i].id == id){
+function findPlayerName(id) {
+  for (let i = 0; i < playerCount; i++) {
+    if (players[i].id == id) {
       return players[i].name;
     }
   }
   return "Fant ikke spilleren"
 }
-function createScoreBoxes(){
+function createScoreBoxes() {
 
 }
-function clearFields(){
+function clearFields() {
   let els = document.getElementsByClassName("roundScoreField");
-  for(let i = 0; i<els.length;i++){
+  for (let i = 0; i < els.length; i++) {
     els[i].value = "";
   }
   els[0].focus()
 }
-function printScores(){
-  if(roundCount == 0 || (hasJustRestored && roundCount>0)){
-  let scoreContainer = document.getElementById("currentScoreContainer")
-  for(let i = 0; i<playerCount;i++){
-    let scoreText = document.createElement("p")
-    scoreText.className = "scoreText"
-    scoreText.innerText = players[i].name + " har " + players[i].score + " poeng."
-    scoreContainer.appendChild(scoreText)
+function printScores() {
+  if (roundCount == 0 || (hasJustRestored && roundCount > 0)) {
+    let scoreContainer = document.getElementById("currentScoreContainer")
+    for (let i = 0; i < playerCount; i++) {
+      let scoreText = document.createElement("p")
+      scoreText.className = "scoreText"
+      scoreText.innerText = players[i].name + " har " + players[i].score + " poeng."
+      scoreContainer.appendChild(scoreText)
     }
     hasJustRestored = false;
   }
   let scoreTexts = document.getElementsByClassName('scoreText');
-  for(let i = 0; i<playerCount;i++){
+  for (let i = 0; i < playerCount; i++) {
     scoreTexts[i].innerText = players[i].name + " har " + players[i].score + " poeng."
   }
 }
-function printCurrentLeader(){
+function printCurrentLeader() {
   let header = document.getElementById('currentLeader')
   let runnerUp = document.getElementById('runnerUp')
   let leader = findLowestScorer()
@@ -271,29 +274,56 @@ function printCurrentLeader(){
 }
 
 
-function findLowestScorer(){
+function findLowestScorer() {
   let x = players;
-  x.sort(function(a,b){
+  x.sort(function (a, b) {
     return a.score - b.score;
   })
   return players[0];
 }
 
-function printWinnerAndScoreboard(){
-let scoreboard = document.getElementById("scoreboard")
-for(let i = 0;i<playerCount;i++){
+function printWinnerAndScoreboard() {
+  let table = document.createElement('table');
+  table.classList += " last-score-table";
+  let scoreboard = document.getElementById("scoreboard")
+  let tr = document.createElement('tr');
+  let emptyTh = document.createElement('th');
+  emptyTh.classList += " empty-cell";
+  tr.appendChild(emptyTh);
+  for (let i = 0; i < rounds.rounds.length; i++) {
+    let th = document.createElement('th');
+    th.textContent = rounds.rounds[i].name;
+    tr.appendChild(th);
+  }
+  table.appendChild(tr);
 
-  let nameNode = document.createElement("h4")
-  nameNode.innerText = players[i].name
-  scoreboard.appendChild(nameNode)
-  for(let j = 0; j<players[i].rounds.length; j++){
-    let el = document.createElement("h2")
-    el.innerText = rounds.rounds[i].name
-    let roundScoreText = players[i].rounds[j]
-    let node = document.createElement("p")
-    node.innerText = rounds.rounds[j].name + " -> " + roundScoreText
-    scoreboard.appendChild(node)
+  for (let j = 0; j < playerCount; j++) {
+    let row = document.createElement('tr');
+    let rowHeader = document.createElement('td');
+    rowHeader.textContent = players[j].name;
+    row.appendChild(rowHeader)
+    for (let x = 0; x < players[j].rounds.length; x++) {
+      let roundData = document.createElement('td');
+      roundData.textContent = players[j].rounds[x];
+      row.appendChild(roundData);
+    }
+    table.appendChild(row);
   }
-  }
+
+  // for (let i = 0; i < playerCount; i++) {
+
+  //   let nameNode = document.createElement("h4")
+  //   nameNode.innerText = players[i].name
+  //   scoreboard.appendChild(nameNode)
+  //   for (let j = 0; j < players[i].rounds.length; j++) {
+  //     let el = document.createElement("h2")
+  //     el.innerText = rounds.rounds[i].name
+  //     let roundScoreText = players[i].rounds[j]
+  //     let node = document.createElement("p")
+  //     node.innerText = rounds.rounds[j].name + " -> " + roundScoreText
+  //     scoreboard.appendChild(node)
+  //   }
+  // }
+  scoreboard.appendChild(table);
 
 }

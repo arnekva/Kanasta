@@ -114,3 +114,65 @@ border:none;
   font-size:15px;
   color:#48adf7;
 }
+
+.scoreboard{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+table {
+	width: 800px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	color: black;
+}
+.empty-cell{
+  background-color: #e6e6e6;
+}
+th {
+	text-align: left;
+}
+
+thead th {
+		background-color: #55608f;
+
+}
+
+tbody td {
+
+		position: relative;
+
+	
+}
+tbody td:hover ::before{
+
+
+
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -9999px;
+      bottom: -9999px;
+      background-color: rgba(255,255,255,0.2);
+      z-index: -1;
+
+}
+@media only screen 
+and (min-device-width : 200px) 
+and (max-device-width : 1024px)  { 
+
+  .last-score-table{
+    margin-top: 550px;
+  }
+  
+}
